@@ -6,7 +6,7 @@ services:
         build:
             context: .
             dockerfile: ./.docker/api/Dockerfile
-        container_name: api-salazar
+        container_name: api-patients-control
         image: api-backend-patients-v001
         volumes:
             - ./:/var/www
@@ -14,11 +14,11 @@ services:
             - ${DOCKER_BACKEND_PORTS}
         restart: always
         environment:
-            - APP_ENV=local
-            - APP_KEY=base64:OFFt9LUfICGigLqXzcx6xKP1iVY+e0U9Pm9NRyey+Go=
-            - APP_DEBUG=true
-            - APP_URL=http://localhost
-            - DB_CONNECTION=pgsql
+            - APP_ENV=${APP_ENV}
+            - APP_KEY=${APP_KEY}
+            - APP_DEBUG=${APP_DEBUG}
+            - APP_URL=${APP_URL}
+            - DB_CONNECTION=${DB_CONNECTION}
             - DB_HOST=${DB_HOST}
             - DB_PORT=5432
             - DB_DATABASE=${DB_DATABASE}
