@@ -9,17 +9,10 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *     title="Doctor Salazar API",
- *     description="Documentation API Doctor José Salazar",
+ *     title="Medical Patients API",
+ *     description="Documentation API Patients Control",
  *     version="1.0.0",
  * )
- * @OA\SecurityScheme(
- *     type="http",
- *     securityScheme="bearerAuth",
- *     scheme="bearer",
- *     bearerFormat="JWT"
- * )
-
  */
 class Controller extends BaseController
 {

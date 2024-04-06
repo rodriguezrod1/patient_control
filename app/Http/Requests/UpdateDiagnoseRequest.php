@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginUserRequest extends FormRequest
+class UpdateDiagnoseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,9 +21,10 @@ class LoginUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $diagnosisId = $this->route('diagnosis')->id;
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'name' => 'required|string|max:255|unique:diagnoses,name,' . $diagnosisId,
+            'description' => 'nullable|string|max:255',
         ];
     }
 }

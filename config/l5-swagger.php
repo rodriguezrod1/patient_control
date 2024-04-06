@@ -198,12 +198,12 @@ return [
                     'in' => 'header', // The location of the API key. Valid values are "query" or "header".
                 ],
                 */
-                'bearerAuth' => [ // Nombre único de seguridad
+                /*'bearerAuth' => [ // Nombre único de seguridad
                     'type' => 'apiKey', // Valores válidos son "basic", "apiKey" o "oauth2".
                     'description' => 'Introduce el token en formato (Bearer <token>)',
                     'name' => 'Authorization', // El nombre del encabezado o parámetro de consulta a utilizar.
                     'in' => 'header', // La ubicación de la clave API. Los valores válidos son "query" o "header".
-                ],
+                ],*/
             ],
             'security' => [
                 /*
@@ -218,7 +218,7 @@ return [
 
                     //'passport' => []
 
-                    'bearerAuth' => []
+                    //'bearerAuth' => []
 
                 ],
             ],
