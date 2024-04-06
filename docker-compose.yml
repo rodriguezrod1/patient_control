@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+    # Service API
+    api:
+        build:
+            context: .
+            dockerfile: ./.docker/api/Dockerfile
+        container_name: api-salazar
+        image: api-backend-patients-v001
+        volumes:
+            - ./:/var/www
+        ports:
+            - ${DOCKER_BACKEND_PORTS}
+        restart: always
+        environment:
+            - APP_ENV=local
+            - APP_KEY=base64:OFFt9LUfICGigLqXzcx6xKP1iVY+e0U9Pm9NRyey+Go=
+            - APP_DEBUG=true
+            - APP_URL=http://localhost
+            - DB_CONNECTION=pgsql
+            - DB_HOST=${DB_HOST}
+            - DB_PORT=5432
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+        depends_on:
+            - db
+        networks:
+            - patients_network
+
+    # Service BD
+    db:
+        image: postgres:14
+        container_name: db-patients
+        restart: always
+        ports:
+            - ${DOCKER_POSTGRES_PORTS}
+        environment:
+            POSTGRES_USER: ${DOCKER_POSTGRES_USER}
+            POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
+            POSTGRES_DB: ${DOCKER_POSTGRES_DB}
+        volumes:
+            - ./.docker/postgresql/db-data:/var/lib/postgresql/data
+        networks:
+            - patients_network
+
+networks:
+    patients_network:
+        driver: bridge
+volumes:
+    db-data:
+        driver: local
