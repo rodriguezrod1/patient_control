@@ -17,7 +17,10 @@ class PatientDiagnoseFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'patient_id' => \App\Models\Patient::factory(),
+            'diagnose_id' => \App\Models\Diagnose::factory(),
+            'observation' => $this->faker->optional()->sentence,
+            'creation' => $this->faker->date(),
         ];
     }
 }

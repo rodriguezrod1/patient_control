@@ -12,16 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@example.com',
-            'rol' => 'super_admin'
-        ]);
-
-        \App\Models\User::factory(10)->create();
 
         $this->call([
-            ZoneSeeder::class
+            PatientSeeder::class,
+            DiagnoseSeeder::class,
+            PatientDiagnoseSeeder::class
         ]);
     }
 }
