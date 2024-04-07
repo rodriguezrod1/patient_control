@@ -21,9 +21,8 @@ class UpdateDiagnoseRequest extends FormRequest
      */
     public function rules(): array
     {
-        $diagnosisId = $this->route('diagnosis')->id;
         return [
-            'name' => 'required|string|max:255|unique:diagnoses,name,' . $diagnosisId,
+            'name' => 'required|string|max:255|unique:diagnoses,name,' . $this->input('id'),
             'description' => 'nullable|string|max:255',
         ];
     }

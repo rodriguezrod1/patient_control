@@ -25,7 +25,7 @@ class DiagnoseService
      */
     public function create(Request $request): Diagnose
     {
-        return Diagnose::create($request->all());
+        return Diagnose::create($request->validated());
     }
 
 
@@ -37,7 +37,7 @@ class DiagnoseService
      */
     public function update(Request $request, Diagnose $diagnose): Diagnose
     {
-        $diagnose->update($request->all());
+        $diagnose->update($request->validated());
         return $diagnose;
     }
 }

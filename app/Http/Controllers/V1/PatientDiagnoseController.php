@@ -29,18 +29,40 @@ class PatientDiagnoseController extends Controller
      *    path="/api/patient_diagnoses",
      *    summary="List all patient diagnose",
      *    tags={"Patient Diagnoses"},
-     *    @OA\Response(response="200", description="Returns list of all diagnoses.")
+     *    @OA\Response(response="200", description="Returns list of all patients diagnoses.")
      * )
      */
     public function index()
     {
         try {
-            $$patientDiagnose = $this->patientDiagnoseService->listAll();
-            return $this->successResponse($$patientDiagnose);
+            $patientDiagnose = $this->patientDiagnoseService->listAll();
+            return $this->successResponse($patientDiagnose);
         } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while retrieving diagnoses.', 500, $e);
+            return $this->errorResponse('An error occurred while retrieving patient diagnoses.', 500, $e);
         }
     }
+
+
+
+
+    /**
+     * @OA\Get(
+     *    path="/api/patient_diagnoses/most-common",
+     *    summary="List all patient diagnose",
+     *    tags={"Patient Diagnoses"},
+     *    @OA\Response(response="200", description="Returns list of all patients diagnoses.")
+     * )
+     */
+    public function getMostCommonInLastSixMonths()
+    {
+        try {
+            $commonDiagnoses = $this->patientDiagnoseService->getMostCommonInLastSixMonths();
+            return $this->successResponse($commonDiagnoses);
+        } catch (\Exception $e) {
+            return $this->errorResponse('An error occurred while retrieving patient diagnoses most common.', 500, $e);
+        }
+    }
+
 
 
 
@@ -56,16 +78,28 @@ class PatientDiagnoseController extends Controller
      *          @OA\Schema(
      *              type="object",
      *              @OA\Property(
-     *                 property="name",
+     *                 property="patient_id",
      *                 type="string",
-     *                 example="otro",
-     *                 description="Name of the patient diagnose."
+     *                 example="1",
+     *                 description="Patient Identifier."
+     *              ),
+     *              @OA\Property(
+     *                 property="diagnose_id",
+     *                 type="string",
+     *                 example="1",
+     *                 description="Diagnostic Identifier."
+     *              ),
+     *              @OA\Property(
+     *                 property="observation",
+     *                 type="string",
+     *                 example="optional",
+     *                 description="Diagnostic observations (optional)."
      *              ),
      *               @OA\Property(
-     *                 property="description",
+     *                 property="creation",
      *                 type="string",
-     *                 example="null",
-     *                 description="Description of the patient diagnose (Optional)."
+     *                 example="2024/04/08",
+     *                 description="Creation Date"
      *              )
      *          )
      *      )
@@ -76,10 +110,10 @@ class PatientDiagnoseController extends Controller
     public function store(StorePatientDiagnoseRequest $request)
     {
         try {
-            $$patientDiagnose = $this->patientDiagnoseService->create($request->validated());
-            return $this->successResponse($$patientDiagnose, 201);
+            $patientDiagnose = $this->patientDiagnoseService->create($request->validated());
+            return $this->successResponse($patientDiagnose, 201);
         } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while storing the diagnose.', 419, $e);
+            return $this->errorResponse('An error occurred while storing the patient diagnose.', 419, $e);
         }
     }
 
@@ -97,9 +131,9 @@ class PatientDiagnoseController extends Controller
     public function show(PatientDiagnose $patientDiagnose)
     {
         try {
-            return $this->successResponse($$patientDiagnose);
+            return $this->successResponse($patientDiagnose);
         } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while retrieving the diagnose.', 500, $e);
+            return $this->errorResponse('An error occurred while retrieving the patient diagnose.', 500, $e);
         }
     }
 
@@ -126,17 +160,29 @@ class PatientDiagnoseController extends Controller
      *         mediaType="application/json",
      *         @OA\Schema(
      *             type="object",
-     *             @OA\Property(
-     *                 property="name",
+     *              @OA\Property(
+     *                 property="patient_id",
      *                 type="string",
-     *                 example="Editado",
-     *                 description="Name of the patient diagnose."
+     *                 example="1",
+     *                 description="Patient Identifier."
      *              ),
-     *             @OA\Property(
-     *                 property="description",
+     *              @OA\Property(
+     *                 property="diagnose_id",
      *                 type="string",
-     *                 example="null",
-     *                 description="Description of the patient diagnose (Optional)."
+     *                 example="1",
+     *                 description="Diagnostic Identifier."
+     *              ),
+     *              @OA\Property(
+     *                 property="observation",
+     *                 type="string",
+     *                 example="optional",
+     *                 description="Diagnostic observations (optional)."
+     *              ),
+     *               @OA\Property(
+     *                 property="creation",
+     *                 type="string",
+     *                 example="2024/04/08",
+     *                 description="Creation Date"
      *              )
      *         )
      *     )
@@ -150,7 +196,7 @@ class PatientDiagnoseController extends Controller
             $diagnoseUpdated = $this->patientDiagnoseService->update($request->validated(), $patientDiagnose);
             return $this->successResponse($diagnoseUpdated);
         } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while updating the patient diagnose.', 419, $e);
+            return $this->errorResponse('An error occurred while updating the patient patient diagnose.', 419, $e);
         }
     }
 

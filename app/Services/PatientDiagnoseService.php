@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\PatientDiagnose;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PatientDiagnoseService
@@ -16,6 +17,28 @@ class PatientDiagnoseService
     public function listAll()
     {
         return PatientDiagnose::all();
+    }
+
+
+
+    /**
+     * List all Diagnoses most Common In Last Six Months.
+     *
+     * @return mixed
+     */
+    public function getMostCommonInLastSixMonths()
+    {
+        $sixMonthsAgo = Carbon::now()->subMonths(6);
+
+        $commonDiagnoses = PatientDiagnose::query()
+            ->where('created_at', '>=', $sixMonthsAgo)
+            ->select('diagnose_id', PatientDiagnose::raw('COUNT(*) as count'))
+            ->groupBy('diagnose_id')
+            ->orderBy('count', 'desc')
+            ->take(5)
+            ->get();
+
+        return $commonDiagnoses;
     }
 
 

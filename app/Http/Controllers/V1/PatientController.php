@@ -37,7 +37,7 @@ class PatientController extends Controller
             $patients = $this->patientService->listAll();
             return $this->successResponse($patients);
         } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while retrieving patients.', 419, $e);
+            return $this->errorResponse('An error occurred while retrieving patients.', 500, $e);
         }
     }
 
@@ -55,19 +55,10 @@ class PatientController extends Controller
     public function search(Request $request)
     {
         try {
-            $query = $request->get('query');
-
-            $patients = Patient::with('branch_offices', 'document_type', 'countrie', 'gender')
-                ->where('name', 'like', "%{$query}%")
-                ->orWhere('lastname', 'like', "%{$query}%")
-                ->orWhere('identification_document', 'like', "%{$query}%")
-                ->orderBy('patients.id', 'desc')
-                ->get();
-
-            return response()->json($patients, 200);
+            $patients = $this->patientService->search($request);
+            return $this->successResponse($patients);
         } catch (\Exception $e) {
-            report($e);
-            return response()->json(['message' => 'An error occurred while retrieving patients.'], 500);
+            return $this->errorResponse('An error occurred while retrieving patients.', 500, $e);
         }
     }
 
@@ -185,7 +176,7 @@ class PatientController extends Controller
      *         mediaType="application/json",
      *         @OA\Schema(
      *             type="object",
-      *              @OA\Property(
+     *              @OA\Property(
      *                 property="document",
      *                 type="string",
      *                 example="1246546565",
@@ -260,7 +251,7 @@ class PatientController extends Controller
             $patient->delete();
             return $this->successResponse([], 204);
         } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while deleting the treatment.', 419, $e);
+            return $this->errorResponse('An error occurred while deleting the treatment.', 500, $e);
         }
     }
 }

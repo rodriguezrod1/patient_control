@@ -58,7 +58,7 @@ class DiagnoseController extends Controller
      *              @OA\Property(
      *                 property="name",
      *                 type="string",
-     *                 example="otro",
+     *                 example="Tratamiento X",
      *                 description="Name of the diagnose."
      *              ),
      *               @OA\Property(
@@ -76,7 +76,7 @@ class DiagnoseController extends Controller
     public function store(StoreDiagnoseRequest $request)
     {
         try {
-            $diagnose = $this->diagnoseService->create($request->validated());
+            $diagnose = $this->diagnoseService->create($request);
             return $this->successResponse($diagnose, 201);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while storing the diagnose.', 419, $e);
@@ -129,7 +129,7 @@ class DiagnoseController extends Controller
      *             @OA\Property(
      *                 property="name",
      *                 type="string",
-     *                 example="Editado",
+     *                 example="Tratamiento editado",
      *                 description="Name of the diagnose."
      *              ),
      *             @OA\Property(

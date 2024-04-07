@@ -15,24 +15,26 @@ class PatientService
      */
     public function listAll()
     {
-        return Patient::all();
+        return Patient::with('patient_diagnoses')->paginate(10);
     }
 
 
 
     /**
-     * List all patients.
-     * @param int $id_patient
+     * List all patients for filters.
+     * @param string $query
      * @return mixed
      */
-    public function listAllByPatientId(int $id_patient)
+    public function search(Request $request)
     {
-        $patientTreatmens = Patient::with('treatments', 'status', 'doctors.user')
-            ->where('patient_id', $id_patient)
-            ->orderBy('id', 'desc')
-            ->get();
+        $query = $request->get('query');
 
-        return $patientTreatmens;
+        $patients = Patient::with('patient_diagnoses')
+            ->where('first_name', 'like', "%{$query}%")
+            ->orWhere('last_name', 'like', "%{$query}%")
+            ->orWhere('document_number', 'like', "%{$query}%")
+            ->get();
+        return $patients;
     }
 
 
