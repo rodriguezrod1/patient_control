@@ -22,12 +22,12 @@ class StorePatientRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'document' => 'required|string|size:20|unique:patients,document',
+            'document' => 'required|string|max:20|unique:patients,document',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'birth_date' => 'required|string|size:30',
+            'birth_date' => 'required|string|max:30',
             'email' => 'required|string|email|max:255|unique:patients,email',
-            'phone' => 'required|string|size:20',
+            'phone' => 'required|string|max:20',
             'gender' => 'required|string|in:Male,Female',
         ];
     }

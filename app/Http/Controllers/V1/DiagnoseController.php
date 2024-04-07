@@ -147,7 +147,7 @@ class DiagnoseController extends Controller
     public function update(UpdateDiagnoseRequest $request, Diagnose $diagnose)
     {
         try {
-            $diagnoseUpdated = $this->diagnoseService->update($request->validated(), $diagnose);
+            $diagnoseUpdated = $this->diagnoseService->update($request, $diagnose);
             return $this->successResponse($diagnoseUpdated);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while updating the diagnose.', 419, $e);

@@ -21,12 +21,12 @@ class UpdatePatientRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'document' => 'sometimes|required|string|size:20|unique:patients,document,'.$this->patient->document,
+            'document' => 'sometimes|required|string|max:20|unique:patients,document,'.$this->route('patient')->id,
             'first_name' => 'sometimes|required|string|max:255',
             'last_name' => 'sometimes|required|string|max:255',
-            'birth_date' => 'sometimes|required|string|size:30',
-            'email' => 'sometimes|required|string|email|max:255|unique:patients,email,'.$this->patient->email,
-            'phone' => 'sometimes|required|string|size:20',
+            'birth_date' => 'sometimes|required|string|max:30',
+            'email' => 'sometimes|required|string|email|max:255|unique:patients,email,'.$this->route('patient')->id,
+            'phone' => 'sometimes|required|string|max:20',
             'gender' => 'sometimes|required|string|in:Male,Female',
         ];
     }

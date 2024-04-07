@@ -16,7 +16,7 @@ class PatientDiagnoseService
      */
     public function listAll()
     {
-        return PatientDiagnose::all();
+        return PatientDiagnose::with(['patient', 'diagnose'])->get();
     }
 
 
@@ -31,9 +31,10 @@ class PatientDiagnoseService
         $sixMonthsAgo = Carbon::now()->subMonths(6);
 
         $commonDiagnoses = PatientDiagnose::query()
-            ->where('created_at', '>=', $sixMonthsAgo)
-            ->select('diagnose_id', PatientDiagnose::raw('COUNT(*) as count'))
-            ->groupBy('diagnose_id')
+            ->join('diagnoses', 'patient_diagnoses.diagnose_id', '=', 'diagnoses.id')
+            ->where('patient_diagnoses.created_at', '>=', $sixMonthsAgo)
+            ->select('diagnoses.name', PatientDiagnose::raw('COUNT(*) as count'))
+            ->groupBy('diagnoses.name')
             ->orderBy('count', 'desc')
             ->take(5)
             ->get();
@@ -48,7 +49,7 @@ class PatientDiagnoseService
      */
     public function create(Request $request): PatientDiagnose
     {
-        return PatientDiagnose::create($request->all());
+        return PatientDiagnose::create($request->validated());
     }
 
 
@@ -60,7 +61,7 @@ class PatientDiagnoseService
      */
     public function update(Request $request, PatientDiagnose $patientDiagnose): PatientDiagnose
     {
-        $patientDiagnose->update($request->all());
+        $patientDiagnose->update($request->validated());
         return $patientDiagnose;
     }
 }

@@ -32,7 +32,7 @@ class PatientService
         $patients = Patient::with('patient_diagnoses')
             ->where('first_name', 'like', "%{$query}%")
             ->orWhere('last_name', 'like', "%{$query}%")
-            ->orWhere('document_number', 'like', "%{$query}%")
+            ->orWhere('document', 'like', "%{$query}%")
             ->get();
         return $patients;
     }
@@ -44,7 +44,7 @@ class PatientService
      */
     public function store(Request $request): Patient
     {
-        $patientData = $request->all();
+        $patientData = $request->validated();
         $patientData['birth_date'] = Carbon::parse($request->input('birth_date'))->format('Y-m-d');
 
         return Patient::create($patientData);
@@ -60,7 +60,7 @@ class PatientService
      */
     public function update(Request $request, Patient $patient): Patient
     {
-        $patientData = $request->all();
+        $patientData = $request->validated();
         $patientData['birth_date'] = Carbon::parse($request->input('birth_date'))->format('Y-m-d');
 
         $patient->update($patientData);

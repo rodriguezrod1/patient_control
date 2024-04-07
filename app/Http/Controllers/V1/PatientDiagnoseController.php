@@ -59,7 +59,7 @@ class PatientDiagnoseController extends Controller
             $commonDiagnoses = $this->patientDiagnoseService->getMostCommonInLastSixMonths();
             return $this->successResponse($commonDiagnoses);
         } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while retrieving patient diagnoses most common.', 500, $e);
+            return $this->errorResponse('An error occurred while retrieving patient diagnoses most common.'.$e->getMessage(), 500, $e);
         }
     }
 
@@ -110,7 +110,7 @@ class PatientDiagnoseController extends Controller
     public function store(StorePatientDiagnoseRequest $request)
     {
         try {
-            $patientDiagnose = $this->patientDiagnoseService->create($request->validated());
+            $patientDiagnose = $this->patientDiagnoseService->create($request);
             return $this->successResponse($patientDiagnose, 201);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while storing the patient diagnose.', 419, $e);
@@ -131,6 +131,7 @@ class PatientDiagnoseController extends Controller
     public function show(PatientDiagnose $patientDiagnose)
     {
         try {
+            $patientDiagnose->load(['patient', 'diagnose']);
             return $this->successResponse($patientDiagnose);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while retrieving the patient diagnose.', 500, $e);
@@ -193,7 +194,7 @@ class PatientDiagnoseController extends Controller
     public function update(UpdatePatientDiagnoseRequest $request, PatientDiagnose $patientDiagnose)
     {
         try {
-            $diagnoseUpdated = $this->patientDiagnoseService->update($request->validated(), $patientDiagnose);
+            $diagnoseUpdated = $this->patientDiagnoseService->update($request, $patientDiagnose);
             return $this->successResponse($diagnoseUpdated);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while updating the patient patient diagnose.', 419, $e);

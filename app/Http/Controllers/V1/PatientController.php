@@ -46,7 +46,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Get(
-     *    path="/api/patients/search?query=Juan",
+     *    path="/api/patients/search?query=Rod",
      *    summary="List all patients for filter",
      *    tags={"Patients"},
      *    @OA\Response(response="200", description="Returns list of all patients.")
@@ -58,7 +58,7 @@ class PatientController extends Controller
             $patients = $this->patientService->search($request);
             return $this->successResponse($patients);
         } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while retrieving patients.', 500, $e);
+            return $this->errorResponse('An error occurred while retrieving patients.'.$e->getMessage(), 500, $e);
         }
     }
 
@@ -127,7 +127,7 @@ class PatientController extends Controller
     public function store(StorePatientRequest $request)
     {
         try {
-            $patient = $this->patientService->store($request->validated());
+            $patient = $this->patientService->store($request);
             return $this->successResponse($patient, 201);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while storing the patient.', 419, $e);
@@ -227,7 +227,7 @@ class PatientController extends Controller
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
         try {
-            $patient = $this->patientService->update($request->validated(), $patient);
+            $patient = $this->patientService->update($request, $patient);
             return $this->successResponse($patient);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while updating the Patient.', 419, $e);

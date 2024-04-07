@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+
 use App\Http\Requests\BaseFormRequest;
 
 class UpdateDiagnoseRequest extends BaseFormRequest
@@ -21,7 +22,7 @@ class UpdateDiagnoseRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:diagnoses,name,' . $this->input('id'),
+            'name' => 'required|string|max:255|unique:diagnoses,name,' . $this->route('diagnose')->id,
             'description' => 'nullable|string|max:255',
         ];
     }

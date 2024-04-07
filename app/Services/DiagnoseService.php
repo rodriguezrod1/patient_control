@@ -37,7 +37,7 @@ class DiagnoseService
      */
     public function update(Request $request, Diagnose $diagnose): Diagnose
     {
-        $diagnose->update($request->validated());
+        $diagnose->update($request->all());
         return $diagnose;
     }
 }
