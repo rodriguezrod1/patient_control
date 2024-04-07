@@ -16,8 +16,8 @@ class Diagnose extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
-        'diagnose_id',
         'description'
     ];
 

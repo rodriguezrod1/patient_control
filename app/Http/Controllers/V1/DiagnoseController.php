@@ -170,7 +170,7 @@ class DiagnoseController extends Controller
     {
         try {
             $diagnose->delete();
-            return $this->successResponse([], 204);
+            return $this->successResponse('Deleted', 204);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while deleting the diagnose.', 500, $e);
         }

@@ -19,7 +19,14 @@ use App\Http\Controllers\V1\{
 |
 */
 
-Route::apiResource('diagnoses', DiagnoseController::class);
+Route::controller(DiagnoseController::class)->prefix('diagnoses')->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{diagnose}', 'show');
+    Route::get('/{diagnose}', 'show');
+    Route::put('/{diagnose}', 'update');
+    Route::delete('/{diagnose}', 'destroy');
+});
 
 
 Route::controller(PatientController::class)->prefix('patients')->group(function () {

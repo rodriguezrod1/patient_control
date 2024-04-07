@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class UpdatePatientDiagnoseRequest extends FormRequest
+class UpdatePatientDiagnoseRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class UpdatePatientDiagnoseRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'patient_id' => 'required|exists:patients,id',

@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
+use App\Http\Requests\BaseFormRequest;
 
-use Illuminate\Foundation\Http\FormRequest;
 
-
-class StorePatientRequest extends FormRequest
+class StorePatientRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
