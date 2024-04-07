@@ -15,7 +15,7 @@ class PatientService
      */
     public function listAll()
     {
-        return Patient::with('patient_diagnoses')->paginate(10);
+        return Patient::with('patient_diagnoses.diagnose')->paginate(10);
     }
 
 
@@ -29,7 +29,7 @@ class PatientService
     {
         $query = $request->get('query');
 
-        $patients = Patient::with('patient_diagnoses')
+        $patients = Patient::with('patient_diagnoses.diagnose')
             ->where('first_name', 'like', "%{$query}%")
             ->orWhere('last_name', 'like', "%{$query}%")
             ->orWhere('document', 'like', "%{$query}%")

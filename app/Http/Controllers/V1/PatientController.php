@@ -148,7 +148,7 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         try {
-            $patient->load(['patient_diagnoses']);
+            $patient->load(['patient_diagnoses.diagnose']);
             return $this->successResponse($patient);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while retrieving the Patient.', 419, $e);
