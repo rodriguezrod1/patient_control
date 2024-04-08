@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return ['Doctor-Salazar-api: ' => app()->version()];
+    return ['Medical Patients API: ' => app()->version()];
 });
